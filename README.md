@@ -48,6 +48,8 @@ A navegação permite visitar qualquer setor. Participar exige as contribuiçõe
 npm test
 ```
 
+Resultados e limites das verificações estão em `VALIDATION.md`.
+
 Sem dependências npm de produção. O `vercel.json` mantém a publicação estática explícita. A integração existente do GitHub com o Vercel publica `main`.
 
 ## Limites e próximo refinamento visual

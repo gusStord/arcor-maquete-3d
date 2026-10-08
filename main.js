@@ -27,7 +27,7 @@ function interaction(s){
 }
 function balanceText(s){return s.cooperated?'Vocês encontraram um ritmo compartilhado.':balanced(s)?'O ponto de encontro chegou. Agora, firmem.':Math.abs(s.balance[0]-s.balance[1])>30?'Esticar e ceder: aproximem os ritmos.':'Encontrem juntos o centro, perto de 50.'}
 function renderPass(s){$('#pass-symbol').textContent=symbolInfo(s)?.glyph||'✧';$('#pass-text').textContent=demo?'Família de demonstração · suas escolhas estão guardadas.':s.shared?'Nossa história agora alcança outra pessoa.':s.symbol?`${symbolInfo(s).label} · o sinal da nossa família.`:s.received?'Sua fita está pronta para receber uma história.':'Uma identidade compartilhada pela família.';$('#milestones').innerHTML=[['Imaginar',!!s.symbol],['Construir',s.blocks===3],['Encontrar',s.cooperated],['Partilhar',s.shared]].map(([text,done])=>`<span class="${done?'done':''}">${done?'✓ ':''}${text}</span>`).join('');$('#reset').disabled=demo}
-function render(){const s=shown(),st=stages[active];
+function render(){const s=shown(),st=stages[active];document.querySelector('.stage').classList.toggle('focused',active>=0);
  $('#detail-count').textContent=st?`ETAPA ${String(active+1).padStart(2,'0')} / 07`:'VISÃO GERAL';
  $('#detail-title').textContent=st?st.name+' · '+st.verb:'Tudo começa com vocês.';
  $('#detail-text').textContent=st?st.text:'Siga a fita vermelha. Imagine, construa e encontre o ritmo de quem está ao seu lado.';
@@ -44,7 +44,7 @@ function render(){const s=shown(),st=stages[active];
  renderPass(s);scene?.update(s);
 }
 function focusDetail(){if(matchMedia('(max-width:800px)').matches)$('#detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})}
-function select(i,{fromMarker=false}={}){active=Math.max(-1,Math.min(6,i));$('#feedback').textContent='';if(demo){demo=false;playing=false}render();scene?.focus(active);if(fromMarker)focusDetail()}
+function select(i,{fromMarker=false}={}){active=Math.max(-1,Math.min(6,i));$('#feedback').textContent='';if(demo){demo=false;playing=false}render();scene?.focus(active);if(fromMarker)focusDetail();else if(matchMedia('(min-width:801px)').matches)document.querySelector('.panel').scrollTop=0;}
 stages.forEach((s,i)=>{const b=document.createElement('button');b.className='chapter';b.textContent=String(i+1).padStart(2,'0');b.setAttribute('aria-label',s.name+' — '+s.verb);b.onclick=()=>select(i);$('#chapter-list').append(b)});
 function notify(text){$('#feedback').textContent=text}
 function persist(){if(!saveState(family))$('#storage-note').hidden=false}
@@ -66,7 +66,7 @@ $('#previous').onclick=()=>move(-1);$('#next').onclick=()=>move(1);
 function startTour(){demo=true;playing=true;active=0;tourElapsed=0;lastDemoKey='';notify('');render();scene?.focus(0)}
 $('#tour').onclick=()=>{if(!demo)startTour();else{if(active===6&&tourElapsed>=durations[6])startTour();else{playing=!playing;render()}}};
 $('#restart-tour').onclick=startTour;$('#leave-tour').onclick=()=>select(active);
-function tick(now){const dt=lastTime?Math.min((now-lastTime)/1000,.15):0;lastTime=now;if(demo&&playing&&!document.hidden){tourElapsed+=dt;if(tourElapsed>=durations[active]){if(active<6){active++;tourElapsed=0;lastDemoKey='';scene?.focus(active)}else{tourElapsed=durations[6];playing=false}}const s=shown(),key=[active,s.received,s.symbol,s.blocks,s.cooperated,s.revealed,s.shared,Math.floor(tourElapsed)].join('/');if(key!==lastDemoKey){lastDemoKey=key;render()}scene?.update(s);$('#tour-progress').style.width=(tourElapsed/durations[active]*100)+'%'}requestAnimationFrame(tick)}
+function tick(now){const dt=lastTime?Math.max(0,(now-lastTime)/1000):0;lastTime=now;if(demo&&playing&&!document.hidden){tourElapsed+=dt;if(tourElapsed>=durations[active]){if(active<6){active++;tourElapsed=0;lastDemoKey='';scene?.focus(active)}else{tourElapsed=durations[6];playing=false}}const s=shown(),key=[active,s.received,s.symbol,s.blocks,s.cooperated,s.revealed,s.shared,Math.floor(tourElapsed)].join('/');if(key!==lastDemoKey){lastDemoKey=key;render()}scene?.update(s);$('#tour-progress').style.width=(tourElapsed/durations[active]*100)+'%'}requestAnimationFrame(tick)}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){playing=false;render()}if(document.hidden&&audio)audio.suspend();else if(sound&&audio)audio.resume().catch(()=>{})});
 $('#reset').onclick=()=>$('#reset-dialog').showModal();$('#reset-cancel').onclick=()=>$('#reset-dialog').close();$('#reset-confirm').onclick=()=>{family=freshState();persist();$('#reset-dialog').close();select(0)};
 $('#about-open').onclick=()=>$('#about').showModal();$('#about-close').onclick=()=>$('#about').close();
