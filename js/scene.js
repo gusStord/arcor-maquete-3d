@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { stages } from './narrative.js';
+import { enrichScenography } from './art-direction.js';
 export function createScene({mount,labelContainer,onSelect,onError}) {
 const scene=new THREE.Scene();scene.background=new THREE.Color('#172631');scene.fog=new THREE.FogExp2(0x172631,.008);
 const camera=new THREE.PerspectiveCamera(40,1,.1,180);camera.position.set(28,32,32);
@@ -95,6 +96,8 @@ for(const [x,z,w,h] of [[-7,-9.3,3.6,3.5],[-6.4,-4.4,4.3,2.5],[6.1,7.2,5.5,3],[6
 for(let i=0;i<9;i++){const x=-8.25+(i%3)*.65,z=5.8+Math.floor(i/3)*.66;box(.58,.18,.58,x,2.15,z,mat(0x79482e,.05,.28));box(.44,.04,.44,x,2.26,z,mat(0x9a6241,.08,.35))}
 const caramelPoints=[];for(let i=0;i<=60;i++){const a=i/60*Math.PI*3;caramelPoints.push(new THREE.Vector3(6+Math.cos(a)*1.65,1.1+i/60*1.3,5+Math.sin(a)*.6))}
 mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(caramelPoints),64,.12,10,false),copper,0,0,0);
+// Extra detail inspired by the photographic concept references.
+const scenicDetail=enrichScenography({scene,materials});
 // A calm, legible rest area sits between Block and Butter Toffees.
 for(const z of [8.1,9]){box(2.3,.16,.48,.4,.55,z,materials.wood);for(const x of [-.4,1.2])box(.1,.5,.35,x,.25,z,materials.gold)}
 function sign(text,x,y,z,width=3,color='#ecd09e'){
@@ -168,5 +171,5 @@ function tick(now){if(!renderAlive)return;requestAnimationFrame(tick);if(documen
  try{renderer.render(scene,camera)}catch(error){renderAlive=false;console.error('Renderização interrompida:',error);onError('A maquete não conseguiu continuar a renderização. Sua jornada está salva; tente recarregar.')} 
 }
 goTo(-1);updateState(viewState);requestAnimationFrame(tick);
-return {update:updateState,focus:goTo,zoom(factor){targetCamera=null;targetLook=null;const offset=camera.position.clone().sub(controls.target);offset.setLength(THREE.MathUtils.clamp(offset.length()*factor,controls.minDistance,controls.maxDistance));camera.position.copy(controls.target).add(offset);controls.update()},metrics:()=>({drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles})};
+return {update:updateState,focus:goTo,zoom(factor){targetCamera=null;targetLook=null;const offset=camera.position.clone().sub(controls.target);offset.setLength(THREE.MathUtils.clamp(offset.length()*factor,controls.minDistance,controls.maxDistance));camera.position.copy(controls.target).add(offset);controls.update()},metrics:()=>({drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,highDetail:scenicDetail.high})};
 }
