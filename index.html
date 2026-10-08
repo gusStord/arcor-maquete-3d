@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#09111a">
+<meta name="description" content="Explore a maquete conceitual interativa da experiência Arcor no Natal do Shopping Eldorado.">
+<title>Este Natal Ainda Não Existe — Maquete 3D Arcor</title>
+<link rel="stylesheet" href="./styles.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><span class="mark">ARCOR</span><span class="divider"></span><span class="brand-caption">EXPERIÊNCIA IMERSIVA<br>SHOPPING ELDORADO · CONCEITO</span></div>
+  <div class="top-actions"><span class="status"><span class="dot"></span> MAQUETE CONCEITUAL</span><button id="reset" class="icon-btn" title="Restaurar câmera" aria-label="Restaurar câmera">↺</button></div>
+</header>
+<main class="stage">
+  <div id="viewport" role="img" aria-label="Visualização 3D interativa da maquete Arcor com módulos Tortuguita, Block, Butter Toffees, clímax, Bon o Bon e caminhos"></div>
+  <div class="top-copy"><div class="eyebrow">UMA EXPERIÊNCIA DE NATAL FEITA POR VOCÊ</div><h1>Este Natal<br><em>ainda não existe.</em></h1><p>A família não visita um Natal pronto.<br>Ela ajuda a fazê-lo existir.</p></div>
+  <div class="control-hint">✥ Arraste para girar <span>·</span> Role para aproximar <span>·</span> Toque nos módulos</div>
+  <div class="size-tag">ÁREA CONCEITUAL <strong>20 × 20 m</strong><small>Sem validação técnica do local</small></div>
+  <div id="labels" class="labels" aria-hidden="true"></div>
+  <div class="scene-actions"><button id="overview" class="secondary active">◈ Vista geral</button><button id="tour" class="primary">▶ Iniciar jornada</button></div>
+</main>
+<aside class="panel" aria-label="Navegação pelos módulos">
+<div class="panel-head"><div class="eyebrow">EXPLORE A EXPERIÊNCIA</div><h2>Uma jornada.<br>Várias transformações.</h2><p>Sete momentos conectados por uma história.</p></div>
+<nav id="chapter-list" aria-label="Estações da maquete"></nav>
+<div class="detail" id="detail" aria-live="polite"><span id="detail-count"></span><h3 id="detail-title">Explore a maquete</h3><p id="detail-text">Selecione uma estação para conhecer a sua função na experiência.</p><div id="detail-quote" class="quote"></div></div>
+<div class="panel-footer"><span>PROJETO ACADÊMICO · NÃO OFICIAL</span><span>ARCOR / ELDORADO</span></div>
+</aside>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
