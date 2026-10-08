@@ -2,34 +2,43 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#09111a">
-<meta name="description" content="Explore a maquete conceitual interativa da experiência Arcor no Natal do Shopping Eldorado.">
-<title>Este Natal Ainda Não Existe — Maquete 3D Arcor</title>
+<meta name="theme-color" content="#101b27">
+<meta name="description" content="Uma família. Sete momentos. Explore e transforme a maquete 3D da proposta acadêmica de Natal Arcor no Shopping Eldorado.">
+<title>Este Natal Ainda Não Existe — Arcor</title>
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="./styles.css">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script>
 </head>
 <body>
+<a class="skip" href="#detail">Ir para a experiência</a>
 <div class="app">
 <header class="topbar">
-  <div class="brand"><span class="mark">ARCOR</span><span class="divider"></span><span class="brand-caption">EXPERIÊNCIA IMERSIVA<br>SHOPPING ELDORADO · CONCEITO</span></div>
-  <div class="top-actions"><span class="status"><span class="dot"></span> MAQUETE CONCEITUAL</span><button id="reset" class="icon-btn" title="Restaurar câmera" aria-label="Restaurar câmera">↺</button></div>
+ <div class="brand"><span class="mark">ARCOR</span><span class="brand-caption">SHOPPING ELDORADO<br><strong>UMA PROPOSTA DE NATAL</strong></span></div>
+ <div class="top-actions"><span class="academic">PROJETO ACADÊMICO</span><button id="sound" class="tool" aria-pressed="false">Som desligado</button><button id="fullscreen" class="tool">Tela cheia</button><button class="tool" id="about-open" aria-label="Sobre esta proposta">Sobre</button></div>
 </header>
-<main class="stage">
-  <div id="viewport" role="img" aria-label="Visualização 3D interativa da maquete Arcor com módulos Tortuguita, Block, Butter Toffees, clímax, Bon o Bon e caminhos"></div>
-  <div class="top-copy"><div class="eyebrow">UMA EXPERIÊNCIA DE NATAL FEITA POR VOCÊ</div><h1>Este Natal<br><em>ainda não existe.</em></h1><p>A família não visita um Natal pronto.<br>Ela ajuda a fazê-lo existir.</p></div>
-  <div class="control-hint">✥ Arraste para girar <span>·</span> Role para aproximar <span>·</span> Toque nos módulos</div>
-  <div class="size-tag">ÁREA CONCEITUAL <strong>20 × 20 m</strong><small>Sem validação técnica do local</small></div>
-  <div id="labels" class="labels" aria-hidden="true"></div>
-  <div class="scene-actions"><button id="overview" class="secondary active">◈ Vista geral</button><button id="tour" class="primary">▶ Iniciar jornada</button></div>
+<main class="stage" aria-label="Maquete interativa">
+ <div id="viewport" aria-label="Maquete 3D. Arraste para girar, use a roda ou dois dedos para aproximar."></div>
+ <div class="top-copy"><div class="eyebrow">VOCÊ FAZ PARTE DESTA HISTÓRIA</div><h1>Este Natal<br><em>ainda não existe.</em></h1><p>A família não visita um Natal pronto.<br>Ela ajuda a fazê-lo existir.</p></div>
+ <div class="size-tag"><span>ÁREA CONCEITUAL</span><strong>20 × 20 m</strong><span>400 m² · estudo de implantação</span></div>
+ <div id="labels" class="labels"></div>
+ <div class="scene-status" id="scene-status" role="status">Carregando a maquete 3D…</div>
+ <div class="scene-bottom"><div class="scene-caption"><span id="mode-label">EXPLORAÇÃO LIVRE</span><p id="scene-caption">Um Natal que ganha vida com vocês.</p></div>
+ <div class="scene-tools"><button id="zoom-in" class="tool" aria-label="Aproximar maquete">+</button><button id="zoom-out" class="tool" aria-label="Afastar maquete">−</button><button id="overview" class="tool">Vista geral</button></div>
+ <div class="tour-controls"><button id="previous" class="tool" aria-label="Etapa anterior">Anterior</button><button id="tour" class="primary">Apresentação guiada</button><button id="next" class="tool" aria-label="Próxima etapa">Próxima</button><button id="restart-tour" class="tool" aria-label="Reiniciar apresentação" hidden>Reiniciar</button><button id="leave-tour" class="tool" hidden>Explorar</button></div>
+ <div class="tour-timeline" id="tour-timeline" hidden><div id="tour-progress"></div></div>
+ <p class="control-hint">Arraste para girar · Role ou use dois dedos para aproximar</p></div>
 </main>
-<aside class="panel" aria-label="Navegação pelos módulos">
-<div class="panel-head"><div class="eyebrow">EXPLORE A EXPERIÊNCIA</div><h2>Uma jornada.<br>Várias transformações.</h2><p>Sete momentos conectados por uma história.</p></div>
-<nav id="chapter-list" aria-label="Estações da maquete"></nav>
-<div class="detail" id="detail" aria-live="polite"><span id="detail-count"></span><h3 id="detail-title">Explore a maquete</h3><p id="detail-text">Selecione uma estação para conhecer a sua função na experiência.</p><div id="detail-quote" class="quote"></div></div>
-<div class="panel-footer"><span>PROJETO ACADÊMICO · NÃO OFICIAL</span><span>ARCOR / ELDORADO</span></div>
+<aside class="panel" aria-label="Jornada da família">
+ <div class="panel-heading"><span class="eyebrow">SETE MOMENTOS. UMA HISTÓRIA.</span><h2>O Natal feito por nós.</h2></div>
+ <nav id="chapter-list" aria-label="Etapas da experiência"></nav>
+ <section id="detail" class="detail" tabindex="-1"><div class="detail-top"><span id="detail-count" class="eyebrow">VISÃO GERAL</span><span id="demo-badge" class="badge" hidden>DEMONSTRAÇÃO</span></div><h3 id="detail-title">Tudo começa com vocês.</h3><p id="detail-text">Siga a fita vermelha. Imagine, construa e encontre o ritmo de quem está ao seu lado.</p><blockquote id="detail-quote">“Este Natal ainda não existe. E precisamos de vocês para fazê-lo acontecer.”</blockquote><div id="interaction"></div><p id="feedback" class="feedback" role="status" aria-live="polite"></p><div class="step-actions"><button id="continue" class="primary">Começar minha jornada</button></div></section>
+ <section class="family-pass" aria-label="Fita de Autoria"><div class="pass-title"><span class="eyebrow">SUA FITA DE AUTORIA</span><span id="pass-symbol" aria-label="Símbolo escolhido">✧</span></div><p id="pass-text">Uma identidade compartilhada pela família.</p><div id="milestones" class="milestones"></div><button id="reset" class="text-button">Começar uma nova família</button><p id="storage-note" class="fine" hidden>O navegador não permite salvar. Suas escolhas duram enquanto esta página estiver aberta.</p></section>
+ <footer class="panel-footer">Simulação ilustrativa · proposta não oficial<br>Sem vínculo comercial com Arcor ou Shopping Eldorado.</footer>
 </aside>
 </div>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js"}}</script>
+<dialog id="about"><button class="tool close-dialog" id="about-close">Fechar</button><span class="eyebrow">SOBRE A PROPOSTA</span><h2>Um conceito em construção.</h2><p>Projeto acadêmico de brand experience para famílias com crianças de 4 a 12 anos, acompanhadas por responsáveis.</p><p><strong>Conceito:</strong> a família participa da criação do Natal. Tortuguita representa imaginar; Block, fazer acontecer; Butter Toffees, encontrar o outro. Arcor conecta a jornada.</p><p><strong>Simulações:</strong> símbolos, montagem, equilíbrio entre controles, revelação e presente demonstram possibilidades de interação. Não definem equipamentos físicos.</p><p><strong>Em validação:</strong> tecnologia da Fita de Autoria, dimensões e acessos, materiais, operação, formato do clímax e distribuição de produtos. Bon o Bon é uma hipótese de presente no encerramento, sujeita à regra acadêmica de três submarcas.</p><p>Os 20 × 20 metros e a arquitetura do shopping são referências conceituais, sem levantamento técnico aprovado. A maquete usa geometria procedural, não um projeto executivo.</p></dialog>
+<dialog id="reset-dialog"><h2>Uma nova história?</h2><p>Isso apaga as escolhas desta família nesta aba e devolve o cenário ao início.</p><div class="dialog-actions"><button id="reset-cancel" class="tool">Continuar minha família</button><button id="reset-confirm" class="primary">Começar de novo</button></div></dialog>
+<noscript><p class="noscript">Ative o JavaScript para explorar a maquete. A jornada une Entrada, Tortuguita, Block, Butter Toffees, Clímax Arcor, Bon o Bon e Saída.</p></noscript>
 <script type="module" src="./main.js"></script>
-</body>
-</html>
+</body></html>
